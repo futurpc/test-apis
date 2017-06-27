@@ -23,7 +23,7 @@ public class SiteSettingTest {
 
     @ServiceName("accountConfigReadOnly")
     public interface SiteSetting {
-        @GET("api/account/{account}/configuration/setting/properties?v=3.0&groups=loginSession")
+        @GET("api/account/{account}/configuration/setting/properties?v=3.0")
         Call<List<JsonNode>> listSetting(@Path("account") String account, @Header("Authorization") String bearer);
     }
 
