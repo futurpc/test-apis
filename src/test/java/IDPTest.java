@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class IDPTest {
 
-    @Test
+//    @Test
     public void hello() throws IOException {
         Map<String, String> domains = GeneralAPI.getDomains("https://adminlogin.liveperson.net", LP_ACCOUNT);
         final JsonNode body = GeneralAPI.apiEndpoint(domains, Idp.class)
