@@ -1,14 +1,13 @@
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import static com.google.common.collect.ImmutableMap.of;
 import com.liveperson.api.Idp;
 import com.liveperson.api.MessagingConsumer;
 import com.liveperson.api.infra.GeneralAPI;
 import com.liveperson.api.infra.ws.WebsocketService;
+
 import java.util.Map;
-import org.junit.Test;
+
+import static com.google.common.collect.ImmutableMap.of;
 
 public class UMSTest {
 
