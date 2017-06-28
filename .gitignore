@@ -12,3 +12,5 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 /proj/nbproject/
 nbproject/project.properties
+
+src/test/java/SiteSettingCachedTest.java
