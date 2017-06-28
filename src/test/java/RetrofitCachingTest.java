@@ -97,7 +97,8 @@ public class RetrofitCachingTest {
 
         // /coke is forced to use cache without validating the Etag revision
         SodaService sodaServiceCache = retroBuilder
-                .client(okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder().addHeader("Cache-Control", "only-if-cached, max-stale=" + Integer.MAX_VALUE).build())).build())
+                .client(okBuilder.addInterceptor(chain -> chain.proceed(chain.request().newBuilder()
+                        .addHeader("Cache-Control", "only-if-cached, max-stale=" + Integer.MAX_VALUE).build())).build())
                 .build().create(SodaService.class);
 
         assertThat(sodaServiceCache.cola("coke").execute().body(), is("Always Coca-Cola"));
