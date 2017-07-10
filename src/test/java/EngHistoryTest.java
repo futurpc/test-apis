@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.liveperson.api.AgentVep;
 import com.liveperson.api.infra.GeneralAPI;
+import com.liveperson.api.infra.ServiceName;
 import org.junit.Test;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -21,6 +22,7 @@ public class EngHistoryTest {
 
     public static final ObjectNode OBJECT_NODE = new ObjectMapper().createObjectNode();
 
+    @ServiceName("engHistDomain")
     public interface EngHistApiInterface {
 
 
@@ -33,17 +35,21 @@ public class EngHistoryTest {
 
     }
 
-    public static Call<JsonNode> fetch(final String baseUrl, String account, String userName, String password, HashMap<String, Object>body) throws IOException {
+    public static Call<JsonNode> fetch(String account, String userName, String password, HashMap<String, Object>body) throws IOException {
         Map<String, String> domains = GeneralAPI.getDomains("https://adminlogin.liveperson.net", account);
         final JsonNode bearerBody = GeneralAPI.apiEndpoint(domains, AgentVep.class)
                 .login(account, OBJECT_NODE.put("username", userName).put("password", password))
                 .execute().body();
 
         String bearer = "Bearer " + bearerBody.get("bearer").asText();
-        return new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build().create(EngHistApiInterface.class).getEngagements(account, body, bearer);
+
+       return GeneralAPI.apiEndpoint(domains, EngHistApiInterface.class)
+                .getEngagements(account, body, bearer);
+
+//        return new Retrofit.Builder()
+//                .baseUrl(baseUrl)
+//                .addConverterFactory(JacksonConverterFactory.create())
+//                .build().create(EngHistApiInterface.class).getEngagements(account, body, bearer);
     }
 
 
@@ -58,7 +64,7 @@ public class EngHistoryTest {
         String AUTOMATION_ACCOUNT = "37148534";
         String userName = "grigoryr@liveperson.com";
         String password = "lp123456";
-        System.out.println(fetch("https://va.enghist.liveperson.net", AUTOMATION_ACCOUNT, userName, password, body).execute().body());
+        System.out.println(fetch(AUTOMATION_ACCOUNT, userName, password, body).execute().body());
     }
 
 }
